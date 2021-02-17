@@ -1,56 +1,88 @@
 
 let data = []
-const load = async ()=>{
-    let loading = true
+const load = ()=>{
     fetch('https://jsonplaceholder.typicode.com/users/')
     .then(response => response.json())
     .then(json => {
-        data.push(json)
+        json.forEach((item)=>{
+            data.push(item)
+        })
     })
 }
-const userData = async ()=>{
-    // Load all the element data 
-    await load()
-    const parent = document.getElementById('dataOnLoad')
-    const rowItem = document.createElement('div')
-    rowItem.classList.add("row")
-    parent.appendChild(rowItem);
-    // Div ke andar row. Ab row ke andar columns
 
-    let name,username,email;
+const populate = ()=>{
+    const top = document.getElementById('dataOnLoad')
+    data.forEach((item)=>{
+        // Create 3 Element
+        let name = item.name
+        let username = item.username
+        let email = item.email
+        let id = item.id
+        // console.log(`${name} - ${username} - ${email} - ${id}`)
+        let DOMname = newElement('div', 'col-3', name)
+        let DOMemail = newElement('div', 'col-3', email)
+        let DOMuser = newElement('div', 'col-2', username)
+        // Create Edit Button
+        let edit = newElement('button', 'col-2', 'Edit')
+        edit.classList.add('btn', 'btn-success')
 
-    data[0].forEach(item =>{
-        name = item.name;
-        email = item.email;
-        username = item.username;
+        // Create Delete Button
+        let del = newElement('button','col-2', 'Delete')
+        del.classList.add('btn', 'btn-danger')
+        del.setAttribute('id', `del-${id}`)
+        del.addEventListener('click', function(){
+            data = data.filter(item =>{
+                 return this.id!=`del-${item.id}`
+            })
+            updateList()
+        })
 
-        // Create Elements
-        let nameDOM = create('div', 'col-3', name)
-        let emailDOM = create('div', 'col-3', email)
-        let usernameDOM = create('div', 'col-2', username)
-        let edit = document.createElement('button')
-        edit.classList.add("btn", "btn-primary", "col-2")
-        edit.innerHTML = "Edit"
-        let del = document.createElement('button')
-        del.classList.add("btn", "btn-danger", "col-2")
-        del.innerHTML = "Delete"
-        
-        // Add Elements to DOM
-        rowItem.appendChild(nameDOM)
-        rowItem.appendChild(emailDOM)
-        rowItem.appendChild(usernameDOM)
-        rowItem.appendChild(del)
-        rowItem.appendChild(edit)
+
+        top.appendChild(DOMname)
+        top.appendChild(DOMemail)
+        top.appendChild(DOMuser)
+        top.appendChild(edit)
+        top.appendChild(del)
     })
-
 }
 
-const create = (type, className, text) =>{
-    let newElement = document.createElement(`${type}`)
-    newElement.classList.add(`${className}`)
+const newElement = (element, className, text) =>{
+    const newElement = document.createElement(element)
+    newElement.classList.add(className)
     newElement.innerHTML = `${text}`
-    return newElement
+    return newElement;
+}
+
+const addUser = ()=>{
+    let newUser = {
+        name : document.getElementById('formName').value,
+        email  : document.getElementById('formEmail').value,
+        username : document.getElementById('formUsername').value,
+        id : data.length+1
+    }
+    data.push(newUser)
+    updateList()
+    
+    flushInput()
+    console.log(data)
+}
+
+const updateList = ()=>{
+    const top = document.getElementById('dataOnLoad')
+    let child = top.lastElementChild  
+    while (child) { 
+        top.removeChild(child); 
+        child = top.lastElementChild; 
+    } 
+    populate();
+}
+
+const flushInput = () =>{
+    document.getElementById('formName').value = ''
+    document.getElementById('formEmail').value = ''
+    document.getElementById('formUsername').value = ''
 }
 
 load()
-setTimeout(()=>{userData() },3000)
+
+setTimeout(()=>{populate() },3000)

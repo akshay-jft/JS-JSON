@@ -44,22 +44,22 @@
                         <div class="modal-body">
                             <form>
                                 <div class="mb-3">
-                                  <label for="name" class="form-label">Name</label>
-                                  <input type="text" class="form-control" id="name">
+                                  <label for="formName" class="form-label">Name</label>
+                                  <input type="text" class="form-control" id="formName">
                                 </div>
                                 <div class="mb-3">
-                                  <label for="email" class="form-label">Email</label>
-                                  <input type="email" class="form-control" id="email">
+                                  <label for="formEmail" class="form-label">Email</label>
+                                  <input type="email" class="form-control" id="formEmail">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="username">
+                                    <label for="formUsername" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="formUsername">
                                 </div>
                               </form>
                         </div>
                         <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button onclick="addUser()" class="btn btn-primary">Save changes</button>
                         </div>
                     </div>
                     </div>
@@ -67,7 +67,7 @@
             </div>
           </div>
           <div class="container-fluid text-center">
-              <div id="dataOnLoad" class="pt-4">
+              <div id="dataOnLoad" class="pt-4 row">
 
               </div>
           </div>
