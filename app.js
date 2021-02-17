@@ -1,30 +1,43 @@
-
+let status = false
 let data = []
-const load = ()=>{
-    fetch('https://jsonplaceholder.typicode.com/users/')
-    .then(response => response.json())
-    .then(json => {
-        json.forEach((item)=>{
-            data.push(item)
-        })
+
+const load = async ()=>{
+    let result = await fetch('https://jsonplaceholder.typicode.com/users/')
+    let json = await result.json()
+    json.forEach(item =>{
+        data.push(item)
     })
+    status = true
 }
 
-const populate = ()=>{
+const populate = async ()=>{
     const top = document.getElementById('dataOnLoad')
+    if(!status){     
+        await load()
+    }
+    
     data.forEach((item)=>{
-        // Create 3 Element
+        // Collecting Values here
         let name = item.name
         let username = item.username
         let email = item.email
         let id = item.id
-        // console.log(`${name} - ${username} - ${email} - ${id}`)
+        
         let DOMname = newElement('div', 'col-3', name)
         let DOMemail = newElement('div', 'col-3', email)
         let DOMuser = newElement('div', 'col-2', username)
+
         // Create Edit Button
         let edit = newElement('button', 'col-2', 'Edit')
         edit.classList.add('btn', 'btn-success')
+        edit.setAttribute('id', `edit-${id}`)
+        edit.setAttribute('data-bs-toggle', 'modal')
+        edit.setAttribute('data-bs-target', '#updateModal')
+        edit.addEventListener('click', function(){
+            data.forEach((item)=>{
+                console.log(`${this.id} - edit-${item.id}`)
+            })
+        })
 
         // Create Delete Button
         let del = newElement('button','col-2', 'Delete')
@@ -36,8 +49,6 @@ const populate = ()=>{
             })
             updateList()
         })
-
-
         top.appendChild(DOMname)
         top.appendChild(DOMemail)
         top.appendChild(DOMuser)
@@ -64,7 +75,6 @@ const addUser = ()=>{
     updateList()
     
     flushInput()
-    console.log(data)
 }
 
 const updateList = ()=>{
@@ -83,6 +93,4 @@ const flushInput = () =>{
     document.getElementById('formUsername').value = ''
 }
 
-load()
-
-setTimeout(()=>{populate() },3000)
+populate()

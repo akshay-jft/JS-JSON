@@ -8,69 +8,89 @@
     <!--Botstrap CDN-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-    <!--CUstom CSS-->
+    <!--Custom CSS-->
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Jellyfish Database</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <div id="showcase">
-          <div class="container-fluid px-0 bg-light">
-            <div class="container ">
-
-                <section class="add py-2 text-center">
-                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Add User
-                    </button>
-                </section>
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add User Entry</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="mb-3">
-                                  <label for="formName" class="form-label">Name</label>
-                                  <input type="text" class="form-control" id="formName">
-                                </div>
-                                <div class="mb-3">
-                                  <label for="formEmail" class="form-label">Email</label>
-                                  <input type="email" class="form-control" id="formEmail">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="formUsername" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="formUsername">
-                                </div>
-                              </form>
-                        </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button onclick="addUser()" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                    </div>
+  <h1 class="text-center">THIS IS NON RESPONSIVE</h1>
+    <div id="showcase">
+      <div class="container-fluid px-0 bg-light">
+        <div class="container ">
+          <section class="add py-2 text-center">
+              <button type="button" class="btn btn-dark my-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Add User
+              </button>
+          </section>
+          <!--Add user Modal-->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add User Entry</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                  <form>
+                      <div class="mb-3">
+                        <label for="formName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="formName">
+                      </div>
+                      <div class="mb-3">
+                        <label for="formEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="formEmail">
+                      </div>
+                      <div class="mb-3">
+                          <label for="formUsername" class="form-label">Username</label>
+                          <input type="text" class="form-control" id="formUsername">
+                      </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button onclick="addUser()" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="container-fluid text-center">
-              <div id="dataOnLoad" class="pt-4 row">
+        </div>
+      </div>
+      <div class="container-fluid text-center">
+          <div id="dataOnLoad" class="pt-4 row">
 
-              </div>
           </div>
+      </div>
+      <!--Start of User Update Modal-->
+      <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updateModal">Update User Entry</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                  <div class="mb-3">
+                    <label for="formNameUpdate" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="formNameUpdate">
+                  </div>
+                  <div class="mb-3">
+                    <label for="formEmailUpdate" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="formEmailUpdate">
+                  </div>
+                  <div class="mb-3">
+                      <label for="formUsernameUpdate" class="form-label">Username</label>
+                      <input type="text" class="form-control" id="formUsernameUpdate">
+                  </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--End Of User Update Modal-->
       </div>
     <!--Bootstrap CDN-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
