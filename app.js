@@ -1,6 +1,6 @@
 let status = false
 let data = []
-
+let updatingIndex
 const load = async ()=>{
     let result = await fetch('https://jsonplaceholder.typicode.com/users/')
     let json = await result.json()
@@ -34,9 +34,16 @@ const populate = async ()=>{
         edit.setAttribute('data-bs-toggle', 'modal')
         edit.setAttribute('data-bs-target', '#updateModal')
         edit.addEventListener('click', function(){
-            data.forEach((item)=>{
-                console.log(`${this.id} - edit-${item.id}`)
+            
+            data.forEach((item, index)=>{
+                if(`${this.id}` ==  `edit-${item.id}`){
+                    updatingIndex = index
+                }
             })
+            console.log(updatingIndex)
+            document.getElementById('formNameUpdate').value = data[updatingIndex].name
+            document.getElementById('formEmailUpdate').value = data[updatingIndex].email
+            document.getElementById('formUsernameUpdate').value = data[updatingIndex].username
         })
 
         // Create Delete Button
@@ -85,6 +92,17 @@ const updateList = ()=>{
         child = top.lastElementChild; 
     } 
     populate();
+}
+
+const updateUserProfile = ()=>{
+    let updatedUser = {
+        name : document.getElementById('formNameUpdate').value ,
+        email : document.getElementById('formEmailUpdate').value ,
+        username : document.getElementById('formUsernameUpdate').value 
+    }
+    console.log(updatedUser)
+    data[updatingIndex] = updatedUser
+    updateList()
 }
 
 const flushInput = () =>{
