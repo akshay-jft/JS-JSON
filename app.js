@@ -103,6 +103,7 @@ const updateUserProfile = ()=>{
     console.log(updatedUser)
     data[updatingIndex] = updatedUser
     updateList()
+    flushInput()
 }
 
 const flushInput = () =>{
