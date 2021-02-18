@@ -26,9 +26,9 @@ const populate = async ()=>{
     let rowTag = document.createElement('section')
     rowTag.classList.add('row')
     
-    const nHead = createHeader('col-3', 'Name')
-    const uHead = createHeader('col-3', 'Username')
-    const eHead = createHeader('col-6', 'Email')
+    const nHead = createHeader('col-md-3', 'Name')
+    const uHead = createHeader('col-md-3', 'Username')
+    const eHead = createHeader('col-md-6', 'Email')
     
     rowTag.appendChild(nHead)
     rowTag.appendChild(uHead)
@@ -36,12 +36,12 @@ const populate = async ()=>{
     
     data.forEach((user)=>{
         
-        let nameDOM = createP(user.name, 'col-3')
-        let usernameDOM = createP(user.username, 'col-3')
-        let emailDOM = createP(user.email, 'col-4')
+        let nameDOM = createP(user.name, 'col-md-3')
+        let usernameDOM = createP(user.username, 'col-md-3')
+        let emailDOM = createP(user.email, 'col-md-4')
         
         let edit = createI()
-        edit.classList.add('far','fa-edit', 'col-1', 'edit-icon')
+        edit.classList.add('far','fa-edit', 'col-6', 'col-md-1', 'edit-icon')
         edit.setAttribute('id', `e-${user.id}`)
         edit.addEventListener('click', function(){
             openEditUserModal()
@@ -52,7 +52,7 @@ const populate = async ()=>{
         })
         
         let del = createI()
-        del.classList.add('far','fa-trash-alt', 'col-1', 'del-icon')
+        del.classList.add('far','fa-trash-alt', 'col-6', 'col-md-1', 'del-icon')
         del.setAttribute('id', `d-${user.id}`)
         del.addEventListener('click', function(){
             deleteUser(this.id)
