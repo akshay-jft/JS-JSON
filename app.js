@@ -30,6 +30,10 @@ const populate = async ()=>{
     const uHead = createHeader('col-md-3', 'Username')
     const eHead = createHeader('col-md-6', 'Email')
     
+    nHead.classList.add('d-none', 'd-md-block')
+    uHead.classList.add('d-none', 'd-md-block')
+    eHead.classList.add('d-none', 'd-md-block')
+
     rowTag.appendChild(nHead)
     rowTag.appendChild(uHead)
     rowTag.appendChild(eHead)
