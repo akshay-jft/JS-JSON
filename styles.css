@@ -127,7 +127,7 @@ p{
     font-size: 12px;
 }
 
-@media(max-width:576px){
+@media(max-width:768px){
     .activity{
         display: grid ;
         grid-template-columns: 49% 49%;
