@@ -1,115 +1,156 @@
 let status = false
+let index = -1
 let data = []
-let updatingIndex
-const load = async ()=>{
-    let result = await fetch('https://jsonplaceholder.typicode.com/users/')
+
+let updateCount = 0,
+    deleteCount = 0,
+    insertCount = 0,
+    totalCount = 0
+
+const load = async() =>{
+    let result = await fetch('https://jsonplaceholder.typicode.com/users')
     let json = await result.json()
-    json.forEach(item =>{
+    json.forEach(item=>{
         data.push(item)
     })
     status = true
 }
 
 const populate = async ()=>{
-    const top = document.getElementById('dataOnLoad')
-    if(!status){     
+    if(!status){
         await load()
     }
+    totalCount = data.length
+    document.getElementById('count-t').innerHTML = totalCount
     
-    data.forEach((item)=>{
-        // Collecting Values here
-        let name = item.name
-        let username = item.username
-        let email = item.email
-        let id = item.id
+    let rowTag = document.createElement('section')
+    rowTag.classList.add('row')
+    
+    const nHead = createHeader('col-3', 'Name')
+    const uHead = createHeader('col-3', 'Username')
+    const eHead = createHeader('col-6', 'Email')
+    
+    rowTag.appendChild(nHead)
+    rowTag.appendChild(uHead)
+    rowTag.appendChild(eHead)
+    
+    data.forEach((user)=>{
         
-        let DOMname = newElement('div', 'col-3', name)
-        let DOMemail = newElement('div', 'col-3', email)
-        let DOMuser = newElement('div', 'col-2', username)
-
-        // Create Edit Button
-        let edit = newElement('button', 'col-2', 'Edit')
-        edit.classList.add('btn', 'btn-success')
-        edit.setAttribute('id', `edit-${id}`)
-        edit.setAttribute('data-bs-toggle', 'modal')
-        edit.setAttribute('data-bs-target', '#updateModal')
+        let nameDOM = createP(user.name, 'col-3')
+        let usernameDOM = createP(user.username, 'col-3')
+        let emailDOM = createP(user.email, 'col-4')
+        
+        let edit = createI()
+        edit.classList.add('far','fa-edit', 'col-1', 'edit-icon')
+        edit.setAttribute('id', `e-${user.id}`)
         edit.addEventListener('click', function(){
-            
-            data.forEach((item, index)=>{
-                if(`${this.id}` ==  `edit-${item.id}`){
-                    updatingIndex = index
-                }
-            })
-            console.log(updatingIndex)
-            document.getElementById('formNameUpdate').value = data[updatingIndex].name
-            document.getElementById('formEmailUpdate').value = data[updatingIndex].email
-            document.getElementById('formUsernameUpdate').value = data[updatingIndex].username
+            openEditUserModal()
+            document.getElementById('updateName').value = user.name
+            document.getElementById('updateUserame').value = user.username
+            document.getElementById('updateEmail').value = user.email
+            index = this.id
         })
-
-        // Create Delete Button
-        let del = newElement('button','col-2', 'Delete')
-        del.classList.add('btn', 'btn-danger')
-        del.setAttribute('id', `del-${id}`)
+        
+        let del = createI()
+        del.classList.add('far','fa-trash-alt', 'col-1', 'del-icon')
+        del.setAttribute('id', `d-${user.id}`)
         del.addEventListener('click', function(){
-            data = data.filter(item =>{
-                 return this.id!=`del-${item.id}`
-            })
-            updateList()
+            deleteUser(this.id)
         })
-        top.appendChild(DOMname)
-        top.appendChild(DOMemail)
-        top.appendChild(DOMuser)
-        top.appendChild(edit)
-        top.appendChild(del)
+        
+        rowTag.appendChild(nameDOM)
+        rowTag.appendChild(usernameDOM)
+        rowTag.appendChild(emailDOM)
+        rowTag.appendChild(edit)
+        rowTag.appendChild(del)
+        rowTag.appendChild(document.createElement('hr'))
+        
+        let parent = document.getElementById('userData')
+        parent.appendChild(rowTag)
     })
-}
 
-const newElement = (element, className, text) =>{
-    const newElement = document.createElement(element)
-    newElement.classList.add(className)
-    newElement.innerHTML = `${text}`
-    return newElement;
 }
-
-const addUser = ()=>{
-    let newUser = {
-        name : document.getElementById('formName').value,
-        email  : document.getElementById('formEmail').value,
-        username : document.getElementById('formUsername').value,
-        id : data.length+1
-    }
-    data.push(newUser)
-    updateList()
-    
-    flushInput()
-}
-
-const updateList = ()=>{
-    const top = document.getElementById('dataOnLoad')
+const updateList = () =>{
+    const top = document.getElementById('userData')
     let child = top.lastElementChild  
     while (child) { 
         top.removeChild(child); 
         child = top.lastElementChild; 
-    } 
-    populate();
-}
-
-const updateUserProfile = ()=>{
-    let updatedUser = {
-        name : document.getElementById('formNameUpdate').value ,
-        email : document.getElementById('formEmailUpdate').value ,
-        username : document.getElementById('formUsernameUpdate').value 
     }
-    console.log(updatedUser)
-    data[updatingIndex] = updatedUser
+    populate()
+    totalCount = data.length
+    document.getElementById('count-t').innerHTML = totalCount
+}
+const addUser = function (){
+    let newUser = {
+        name : document.getElementById('name').value,
+        username : document.getElementById('username').value,
+        email : document.getElementById('email').value,
+        id : data.length+1
+    }
+    data.push(newUser)
+    insertCount += 1
+    document.getElementById('count-i').textContent = insertCount
+    closeAddUserModal()
     updateList()
-    flushInput()
+    document.getElementById('name').value = ''
+    document.getElementById('username').value = ''
+    document.getElementById('email').value = ''
 }
 
-const flushInput = () =>{
-    document.getElementById('formName').value = ''
-    document.getElementById('formEmail').value = ''
-    document.getElementById('formUsername').value = ''
+const deleteUser = (id) =>{
+     data = data.filter(item =>{
+        return id!=`d-${item.id}`
+    })
+    updateList()
+    deleteCount += 1
+    document.getElementById('count-d').textContent = deleteCount
 }
 
+const updateUser = () =>{
+    let updatedUser = {
+        name : document.getElementById('updateName').value,
+        username : document.getElementById('updateUserame').value,
+        email : document.getElementById('updateEmail').value,
+    }
+    
+    data.forEach((item, index2) =>{
+        if( `e-${item.id}` == index){
+            data[index2] = updatedUser
+        }
+    })
+    updateList()
+    closeEditUserModal()
+    updateCount = +1
+    document.getElementById('count-u').innerHTML = updateCount
+}
+const openAddUserModal = () =>{
+    document.getElementById('addUserModal').classList.remove('d-none')
+}
+const closeAddUserModal = () =>{
+    document.getElementById('addUserModal').classList.add('d-none')
+}
+
+const openEditUserModal = () =>{
+    document.getElementById('updateUserModal').classList.remove('d-none')
+}
+const closeEditUserModal = () =>{
+    document.getElementById('updateUserModal').classList.add('d-none')
+}
+const createI = (property) =>{
+    const i = document.createElement('i')
+    return i
+}
+const createP = (text, className) =>{
+    const p = document.createElement('p')
+    p.innerHTML = text
+    p.classList.add(className)
+    return p
+}
+const createHeader = (className, text) =>{
+    const el = document.createElement('h5')
+    el.classList.add(className)
+    el.innerHTML = text
+    return el
+}
 populate()

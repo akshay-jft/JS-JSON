@@ -1,25 +1,143 @@
-button.col-2{
-    padding-right: 10px;
+body{
+    font-family: 'Roboto', sans-serif;
 }
-.col-3, .col-2{
-    margin-bottom: 10px;
+#header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
 }
-*{
-    color: black;
-}
-.header-absolute{
+#sticky-head{
     position: fixed;
-    left: 0;
+    padding-top: 10px;
     top: 0;
+    left: 0;
     width: 100%;
     height: 10vh;
     background-color: black;
+    color: white;
+    font-family: 'Open Sans', sans-serif !important;
 }
-.footer-absoulte{
+#sticky-footer{
     position: fixed;
+    bottom: -10px;
     left: 0;
-    bottom: 0;
     width: 100%;
-    height: 10vh;
-    background-color: red;
+    height: 50px;
+    background-color: black;
+    color: white;
+    font-family: 'Open Sans', sans-serif !important;
+}
+.customButton{
+    padding: 5px 30px;
+    background-color: #222;
+    color: turquoise;
+    border: 1px solid #222;
+    border-radius: 5px;
+    transition: all 0.5s ease;
+}
+.customButton:hover{
+    background-color: turquoise;
+    color: #222;
+    transition: all 0.5s ease;
+}
+body{
+    background-color: #b8c6db;
+background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
+
+}
+/* Body Content */
+#dashboard{
+    display: grid;
+    grid-template-columns: 100%;
+    grid-gap: 1rem;
+}
+#dashboard div{
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+.activity{
+    display: flex;
+    justify-content: center;
+    margin-top: 11vh;
+    font-family: 'Open Sans', sans-serif !important;
+}
+.box-1{
+    background-color: #4cbb17;
+    color: white;
+}
+.box-2{
+    background-color:#4169e1;
+    color: white;
+}
+.box-3{
+    background-color : #cc5500;
+    color: white;
+}
+.box-4{
+    background-color: #551a8b;
+    color: white;
+}
+.activity-box{
+    margin: 10px auto;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    width: 33%;
+    padding: 30px 10px;
+}
+
+/* Add User Modal*/
+#addUserModal .content, #updateUserModal .content{
+    padding: 20px;
+    width: 450px;
+    position: relative;
+    background-color:black;
+    color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#addUserModal , #updateUserModal{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+i{
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+}
+.edit-icon:hover{
+    color: green;
+    transition: all 0.3s ease;
+}
+.del-icon:hover{
+    color: crimson;
+    transition: all 0.3s ease;
+}
+p{
+    font-size: 12px;
+}
+
+@media(max-width:576px){
+    .activity{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .activity-box{
+        margin: 10px auto;
+        justify-content: center;
+        width: 100%;
+        padding: 10px 10px;
+        margin: 0;
+    }
 }
