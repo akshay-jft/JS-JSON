@@ -130,16 +130,16 @@ const updateUser = () =>{
         username : document.getElementById('updateUserame').value,
         email : document.getElementById('updateEmail').value,
     }
-    if(validateBlank(newUser)){
+    if(validateBlank(updatedUser)){
         data.forEach((item, index2) =>{
-        if( `e-${item.id}` == index){
-            data[index2] = updatedUser
-        }
-    })
-    updateList()
-    closeEditUserModal()
-    updateCount = +1
-    document.getElementById('count-u').innerHTML = updateCount
+            if( `e-${item.id}` == index){
+                data[index2] = updatedUser
+            }
+        })
+        updateList()
+        closeEditUserModal()
+        updateCount = +1
+        document.getElementById('count-u').innerHTML = updateCount
     }else{
         alert('Please check the entries')
     }
