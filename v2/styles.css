@@ -1,0 +1,74 @@
+*{
+    font-family: 'Roboto', sans-serif;
+}
+#landing{
+    display: grid;
+    grid-template-columns: 20% 80%;
+    background-color: white;
+}
+.sideNav{
+    padding : 10px 30px;
+    background-color: #171E28;
+    min-height: 100vh;
+    color: #7F8388;
+}
+.side-item{
+    padding-top: 10px;
+    padding-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #272D36;
+    margin-bottom: 10px;
+}
+.side-brand{
+    font-size: 30px;
+    color: #eee;
+}
+.side-item:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+#clientBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.addClientBtn{
+    padding: 5px 30px;
+    border: none;
+    background-color: #6464DE;
+    color: white;
+}
+
+#headers{
+    color: #666;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+.dataRow, #headers{
+    display: grid;
+    grid-template-columns: 30% 30% 40%;
+}
+
+.dataRow{
+    border-bottom: 1px solid #eee;
+    padding-bottom: 2px;
+    margin-bottom: 5px;
+    color: #666;
+}
+.dataRow:hover{
+    cursor: pointer;
+    /* box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4); */
+    background-color: #e1e1e1;
+}
+
+@media(max-width:768px){
+    .sideNav{
+        display: none;
+    }
+    #landing{
+        grid-template-columns: 100%;
+    }
+}
