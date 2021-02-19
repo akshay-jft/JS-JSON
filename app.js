@@ -10,6 +10,7 @@ let updateCount = 0,
 const load = async() =>{
     let result = await fetch('https://jsonplaceholder.typicode.com/users')
     let json = await result.json()
+    console.log(json)
     json.forEach(item=>{
         data.push(item)
     })
@@ -85,6 +86,14 @@ const updateList = () =>{
     totalCount = data.length
     document.getElementById('count-t').innerHTML = totalCount
 }
+
+const validateBlank = (val) =>{
+    if(val.name!='' && val.username!='' && val.email!=''){
+        return true
+    }
+    return false
+}
+
 const addUser = function (){
     let newUser = {
         name : document.getElementById('name').value,
@@ -92,14 +101,18 @@ const addUser = function (){
         email : document.getElementById('email').value,
         id : data.length+1
     }
-    data.push(newUser)
-    insertCount += 1
-    document.getElementById('count-i').textContent = insertCount
-    closeAddUserModal()
-    updateList()
-    document.getElementById('name').value = ''
-    document.getElementById('username').value = ''
-    document.getElementById('email').value = ''
+    if(validateBlank(newUser)){
+        data.push(newUser)
+        insertCount += 1
+        document.getElementById('count-i').textContent = insertCount
+        closeAddUserModal()
+        updateList()
+        document.getElementById('name').value = ''
+        document.getElementById('username').value = ''
+        document.getElementById('email').value = ''
+    }else{
+        alert('Please check the entries')
+    }
 }
 
 const deleteUser = (id) =>{
@@ -117,16 +130,20 @@ const updateUser = () =>{
         username : document.getElementById('updateUserame').value,
         email : document.getElementById('updateEmail').value,
     }
+    if(validateBlank(updatedUser)){
+        data.forEach((item, index2) =>{
+            if( `e-${item.id}` == index){
+                data[index2] = updatedUser
+            }
+        })
+        updateList()
+        closeEditUserModal()
+        updateCount = +1
+        document.getElementById('count-u').innerHTML = updateCount
+    }else{
+        alert('Please check the entries')
+    }
     
-    data.forEach((item, index2) =>{
-        if( `e-${item.id}` == index){
-            data[index2] = updatedUser
-        }
-    })
-    updateList()
-    closeEditUserModal()
-    updateCount = +1
-    document.getElementById('count-u').innerHTML = updateCount
 }
 const openAddUserModal = () =>{
     document.getElementById('addUserModal').classList.remove('d-none')
