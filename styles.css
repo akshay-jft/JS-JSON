@@ -27,6 +27,7 @@ body{
     background-color: #2A2B4A;
     color: white;
     font-family: 'Open Sans', sans-serif;
+    z-index: 50;
 }
 .customButton{
     padding: 5px 30px;
@@ -53,13 +54,13 @@ body{
 #dashboard div{
     background-color: white;
     border-radius: 10px;
-    padding: 10px;
+    
 }
 .activity{
     width: 100%;
     display: grid;
     grid-template-columns: 24% 24% 24% 24%;
-    grid-gap: 10px;
+    grid-gap: 15px;
     margin-top: 65px;
     margin-bottom: 10px;
     font-family: 'Open Sans', sans-serif;
@@ -105,7 +106,7 @@ body{
 }
 i{
     font-size: 20px;
-    color: #666;
+    color:#FFF;
     cursor: pointer;
 }
 .edit-icon:hover{
@@ -119,7 +120,24 @@ i{
 p{
     font-size: 12px;
 }
-
+.addBtn button{
+    color: #2A2B4A;
+    background-color: white;
+    border: 1px solid #2A2B4A;
+    transition: all 0.4s ease;
+}
+.addBtn button:hover{
+    background-color: #2A2B4A;
+    color: white;
+    transition: all 0.4s ease;
+}
+.row{
+    background-color: #2A2B4A;
+    color: white;
+}
+#dashboard{
+    background-color: #2A2B4A;
+}
 @media(max-width:768px){
     .activity{
         display: grid ;
