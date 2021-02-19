@@ -14,7 +14,7 @@ body{
     left: 0;
     width: 100%;
     height: 60px;
-    background-color: black;
+    background-color: #2A2B4A;
     color: white;
     font-family: 'Open Sans', sans-serif;
 }
@@ -24,7 +24,7 @@ body{
     left: 0;
     width: 100%;
     height: 50px;
-    background-color: black;
+    background-color: #2A2B4A;
     color: white;
     font-family: 'Open Sans', sans-serif;
 }
@@ -42,9 +42,7 @@ body{
     transition: all 0.5s ease;
 }
 body{
-    background-color: #b8c6db;
-background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
-
+    background-color: #1B203D;
 }
 /* Body Content */
 #dashboard{
@@ -58,25 +56,16 @@ background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
     padding: 10px;
 }
 .activity{
-    display: flex;
-    justify-content: center;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 24% 24% 24% 24%;
+    grid-gap: 10px;
     margin-top: 65px;
+    margin-bottom: 10px;
     font-family: 'Open Sans', sans-serif !important;
 }
-.box-1{
-    background-color: #4cbb17;
-    color: white;
-}
-.box-2{
-    background-color:#4169e1;
-    color: white;
-}
-.box-3{
-    background-color : #cc5500;
-    color: white;
-}
-.box-4{
-    background-color: #551a8b;
+.activity div{
+    background-color: #2A2B4A;
     color: white;
 }
 .activity-box{
@@ -86,7 +75,7 @@ background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
     align-items: center;
     justify-content: space-between;
     text-align: center;
-    width: 33%;
+    width: 100%;
     padding: 30px 10px;
 }
 
