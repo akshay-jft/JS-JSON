@@ -62,11 +62,15 @@ body{
     grid-gap: 10px;
     margin-top: 65px;
     margin-bottom: 10px;
-    font-family: 'Open Sans', sans-serif !important;
+    font-family: 'Open Sans', sans-serif;
 }
 .activity div{
     background-color: #2A2B4A;
     color: white;
+}
+.activity div:hover{
+    opacity: 0.6;
+    cursor: pointer;
 }
 .activity-box{
     margin: 10px auto;
