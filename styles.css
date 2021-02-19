@@ -59,8 +59,8 @@ body{
 .activity{
     width: 100%;
     display: grid;
-    grid-template-columns: 24% 24% 24% 24%;
-    grid-gap: 15px;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-gap: 5px;
     margin-top: 65px;
     margin-bottom: 10px;
     font-family: 'Open Sans', sans-serif;
