@@ -1,175 +1,148 @@
-body{
+*{
     font-family: 'Roboto', sans-serif;
 }
-#header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+#landing{
+    display: grid;
+    grid-template-columns: 20% 80%;
     background-color: white;
 }
-#sticky-head{
-    position: fixed;
+.sideNav{
+    padding : 10px 30px;
+    background-color: #171E28;
+    min-height: 100vh;
+    color: #7F8388;
+}
+.side-item{
     padding-top: 10px;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    background-color: #2A2B4A;
-    color: white;
-    font-family: 'Open Sans', sans-serif;
-}
-#sticky-footer{
-    position: fixed;
-    bottom: -10px;
-    left: 0;
-    width: 100%;
-    height: 50px;
-    background-color: #2A2B4A;
-    color: white;
-    font-family: 'Open Sans', sans-serif;
-    z-index: 50;
-}
-.customButton{
-    padding: 5px 30px;
-    background-color: #222;
-    color: turquoise;
-    border: 1px solid #222;
-    border-radius: 5px;
-    transition: all 0.5s ease;
-}
-.customButton:hover{
-    background-color: turquoise;
-    color: #222;
-    transition: all 0.5s ease;
-}
-body{
-    background-color: #1B203D;
-}
-/* Body Content */
-#dashboard{
-    display: grid;
-    grid-template-columns: 100%;
-    grid-gap: 1rem;
-}
-#dashboard div{
-    background-color: white;
-    border-radius: 10px;
-    
-}
-.activity{
-    width: 100%;
-    display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-gap: 5px;
-    margin-top: 65px;
-    margin-bottom: 10px;
-    font-family: 'Open Sans', sans-serif;
-}
-.activity div{
-    background-color: #2A2B4A;
-    color: white;
-}
-.activity div:hover{
-    opacity: 0.6;
-    cursor: pointer;
-}
-.activity-box{
-    margin: 10px auto;
-    flex-direction: column;
+    padding-bottom: 15px;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    background-color: #272D36;
+    margin-bottom: 10px;
+}
+.side-brand{
+    font-size: 30px;
+    color: #eee;
+}
+.side-item:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+#clientBox{
+    display: flex;
     justify-content: space-between;
-    text-align: center;
-    width: 100%;
-    padding: 30px 10px;
+    align-items: center;
+}
+#clientBox h3{
+    padding-top: 6px;
+}
+.addClientBtn{
+    padding: 5px 30px;
+    border: none;
+    background-color: #6464DE;
+    color: white;
+    transition: all 0.5s ease;
+}
+.addClientBtn:hover{
+    color: #6464DE;
+    background-color: white;
+    border:1px solid #6464DE;
+    transition: all 0.5s ease;
+}
+#headers{
+    color: #666;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+.dataRow, #headers{
+    display: grid;
+    grid-template-columns: 20% 20% 40% 10% 10%;
 }
 
-/* Add User Modal*/
-#addUserModal .content, #updateUserModal .content{
-    padding: 20px;
-    width: 450px;
-    position: relative;
-    background-color:black;
-    color: white;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 50;
+.dataRow{
+    border-bottom: 1px solid #eee;
+    padding-bottom: 2px;
+    margin-bottom: 5px;
+    color: #666;
 }
-#addUserModal , #updateUserModal{
+.dataRow:hover{
+    cursor: pointer;
+    /* box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4); */
+    background-color: #e1e1e1;
+}
+
+.client-row{
+    display: grid;
+    grid-template-columns: 20% 20% 40% 10% 10%;
+    margin-bottom: 10px;
+}
+i{
+    cursor: pointer;
+    padding-top: 5px;
+}
+i:hover{
+    opacity: 0.6;
+}
+#updateUserModal{
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8);
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
 }
-i{
-    font-size: 20px;
-    color:#FFF;
-    cursor: pointer;
-}
-.edit-icon:hover{
-    color: green;
-    transition: all 0.3s ease;
-}
-.del-icon:hover{
-    color: crimson;
-    transition: all 0.3s ease;
-}
-p{
-    font-size: 12px;
-}
-.addBtn button{
-    color: #2A2B4A;
+#updateModalContent{
+    position: relative;
+    max-width: 450px;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
     background-color: white;
-    border: 1px solid #2A2B4A;
-    transition: all 0.4s ease;
+    padding: 20px 15px;
+    border-radius: 10px;
 }
-.addBtn button:hover{
-    background-color: #2A2B4A;
+#updateModalContent *{
+    z-index: 100;
+}
+#footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%; 
+    height: 35px;
+    background-color: black;
     color: white;
-    transition: all 0.4s ease;
 }
-.row{
-    background-color: #2A2B4A;
+#alertBox{
+    scroll-behavior: smooth;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+.success-alert{
+    background-color: green;
     color: white;
 }
-#dashboard{
-    background-color: #2A2B4A;
+.failure-alert{
+    background-color: crimson;
+    color: white;
 }
 @media(max-width:768px){
-    .activity{
-        display: grid ;
-        grid-template-columns: 49% 49%;
-        grid-gap: 10px;
+    .sideNav{
+        display: none;
     }
-    .activity-box{
-        margin: 10px auto;
-        justify-content: center;
-        width: 100%;
-        padding: 10px 10px;
-        margin: 0;
+    #landing{
+        grid-template-columns: 100%;
     }
-    #addUserModal .content, #updateUserModal .content{
-        width: 90%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+    .cEmail{
+        display: none;
     }
-    .col-md-3, .col-md-4{
-        text-align: center;
+    .client-row{
+        grid-template-columns: 40% 40% 10% 10%;
     }
-    .col-6{
-        margin-bottom: 20px;
-        justify-content: center;
-        text-align: center;
-        font-size: 30px;
-    }
-    p{
-        font-size: 16px;
-    }
-    #userData{
-        text-align: center;
+    .dataRow, #headers{
+        grid-template-columns: 40% 40% 10% 10%;
     }
 }

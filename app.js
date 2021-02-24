@@ -1,16 +1,16 @@
 let status = false
-let index = -1
 let data = []
+let updateIndex = -1
+// CRUD Status
+let C = 0,
+    R = 0,
+    U = 0,
+    D = 0
 
-let updateCount = 0,
-    deleteCount = 0,
-    insertCount = 0,
-    totalCount = 0
-
+const DOC = document.getElementById('dataDynamic')
 const load = async() =>{
     let result = await fetch('https://jsonplaceholder.typicode.com/users')
     let json = await result.json()
-    console.log(json)
     json.forEach(item=>{
         data.push(item)
     })
@@ -20,158 +20,192 @@ const load = async() =>{
 const populate = async ()=>{
     if(!status){
         await load()
+        alertBox('success-alert', 'Data Fetched')
     }
-    totalCount = data.length
-    document.getElementById('count-t').innerHTML = totalCount
-    
-    let rowTag = document.createElement('section')
-    rowTag.classList.add('row')
-    
-    const nHead = createHeader('col-md-3', 'Name')
-    const uHead = createHeader('col-md-3', 'Username')
-    const eHead = createHeader('col-md-6', 'Email')
-    
-    nHead.classList.add('d-none', 'd-md-block')
-    uHead.classList.add('d-none', 'd-md-block')
-    eHead.classList.add('d-none', 'd-md-block')
+    document.getElementById('tc').innerHTML = data.length
+    DOC.innerHTML=''
+    data.forEach((client)=>{
+        // Create a client row with id = client.id
+        let clientHead = createClientRow(client.id, 'client-row')
+        // Create p tags with client name, username, email
+        let name = createClientCred('p','cName',client.name)
+        let username = createClientCred('p','cUsername',client.username)
+        let email = createClientCred('p','cEmail',client.email)
 
-    rowTag.appendChild(nHead)
-    rowTag.appendChild(uHead)
-    rowTag.appendChild(eHead)
-    
-    data.forEach((user)=>{
-        
-        let nameDOM = createP(user.name, 'col-md-3')
-        let usernameDOM = createP(user.username, 'col-md-3')
-        let emailDOM = createP(user.email, 'col-md-4')
-        
-        let edit = createI()
-        edit.classList.add('far','fa-edit', 'col-6', 'col-md-1', 'edit-icon')
-        edit.setAttribute('id', `e-${user.id}`)
-        edit.addEventListener('click', function(){
-            openEditUserModal()
-            document.getElementById('updateName').value = user.name
-            document.getElementById('updateUserame').value = user.username
-            document.getElementById('updateEmail').value = user.email
-            index = this.id
+        let edit = createClientCred('i', 'editBtn')
+        edit.classList.add('far','fa-edit')
+        // Attach Modal to Edit Button
+        edit.addEventListener('click', function(e){
+            // Pre Fill Details
+            let targetElement = document.getElementById(e.target.parentElement.id)
+            let previous = {
+                name : targetElement.querySelector('.cName').innerHTML,
+                username : targetElement.querySelector('.cUsername').innerHTML,
+                email : targetElement.querySelector('.cEmail').innerHTML
+            }
+            // Set Modal Values
+            document.getElementById('u-name').value = previous.name
+            document.getElementById('u-username').value = previous.username
+            document.getElementById('u-email').value = previous.email
+            document.querySelector('#updateUserModal').classList.toggle('d-none')
+            updateIndex = client.id
         })
-        
-        let del = createI()
-        del.classList.add('far','fa-trash-alt', 'col-6', 'col-md-1', 'del-icon')
-        del.setAttribute('id', `d-${user.id}`)
-        del.addEventListener('click', function(){
-            deleteUser(this.id)
-        })
-        
-        rowTag.appendChild(nameDOM)
-        rowTag.appendChild(usernameDOM)
-        rowTag.appendChild(emailDOM)
-        rowTag.appendChild(edit)
-        rowTag.appendChild(del)
-        rowTag.appendChild(document.createElement('hr'))
-        
-        let parent = document.getElementById('userData')
-        parent.appendChild(rowTag)
-    })
-
-}
-const updateList = () =>{
-    const top = document.getElementById('userData')
-    let child = top.lastElementChild  
-    while (child) { 
-        top.removeChild(child); 
-        child = top.lastElementChild; 
-    }
-    populate()
-    totalCount = data.length
-    document.getElementById('count-t').innerHTML = totalCount
-}
-
-const validateBlank = (val) =>{
-    if(val.name!='' && val.username!='' && val.email!=''){
-        return true
-    }
-    return false
-}
-
-const addUser = function (){
-    let newUser = {
-        name : document.getElementById('name').value,
-        username : document.getElementById('username').value,
-        email : document.getElementById('email').value,
-        id : data.length+1
-    }
-    if(validateBlank(newUser)){
-        data.push(newUser)
-        insertCount += 1
-        document.getElementById('count-i').textContent = insertCount
-        closeAddUserModal()
-        updateList()
-        document.getElementById('name').value = ''
-        document.getElementById('username').value = ''
-        document.getElementById('email').value = ''
-    }else{
-        alert('Please check the entries')
-    }
-}
-
-const deleteUser = (id) =>{
-     data = data.filter(item =>{
-        return id!=`d-${item.id}`
-    })
-    updateList()
-    deleteCount += 1
-    document.getElementById('count-d').textContent = deleteCount
-}
-
-const updateUser = () =>{
-    let updatedUser = {
-        name : document.getElementById('updateName').value,
-        username : document.getElementById('updateUserame').value,
-        email : document.getElementById('updateEmail').value,
-    }
-    if(validateBlank(updatedUser)){
-        data.forEach((item, index2) =>{
-            if( `e-${item.id}` == index){
-                data[index2] = updatedUser
+        let del = createClientCred('i', 'delBtn')
+        del.classList.add('far','fa-minus-square')
+        // Add Event Listener on Del Button
+        del.addEventListener('click', function(e){
+            if(confirm('Are you sure you want to delete this client?')){
+                updateIndex = e.target.parentElement.id
+                data = data.filter(delItem=>{
+                    return delItem.id!=updateIndex
+                })
+                populate()
+                updateStatus(0,0,1)
+                alertBox('failure-alert', 'User Deleted')
             }
         })
-        updateList()
-        closeEditUserModal()
-        updateCount = +1
-        document.getElementById('count-u').innerHTML = updateCount
-    }else{
-        alert('Please check the entries')
-    }
-    
-}
-const openAddUserModal = () =>{
-    document.getElementById('addUserModal').classList.remove('d-none')
-}
-const closeAddUserModal = () =>{
-    document.getElementById('addUserModal').classList.add('d-none')
+        
+        // Append 5 elements to clientHead
+        clientHead.appendChild(name)
+        clientHead.appendChild(username)
+        clientHead.appendChild(email)
+        clientHead.appendChild(edit)
+        clientHead.appendChild(del)
+        // Append ClientHead to body of html
+        DOC.appendChild(clientHead)
+        
+    })
 }
 
-const openEditUserModal = () =>{
-    document.getElementById('updateUserModal').classList.remove('d-none')
+
+// Add Event Listener on Add User Form
+document.querySelector('#add-user-form').addEventListener('submit', function(e){
+    let name = document.getElementById('c-name')
+    let username = document.getElementById('c-username')
+    let email = document.getElementById('c-email')
+    let status = true
+    if(!validateInput(name,document.getElementById('nameHelp'))){
+        status = false
+    }if(!validateInput(username,document.getElementById('usernameHelp'))){
+        status = false
+    }if(!validateInput(email,document.getElementById('emailHelp'))){
+        status = false
+    }
+    // Check if all entries are correct
+    if(status){
+        let newData = {
+            name : name.value,
+            username : username.value,
+            email : email.value,
+            id : Math.floor(Math.random()*100)
+        }
+        data.push(newData)
+        populate()
+        updateStatus(1,0,0)
+        flushInputs(name,document.getElementById('nameHelp'))
+        flushInputs(username,document.getElementById('usernameHelp'))
+        flushInputs(email,document.getElementById('emailHelp'))
+        alertBox('success-alert', 'User Added')
+    }
+});
+
+// Add Event Listener on Update User Modal
+document.getElementById('update-user-form').addEventListener('submit', function(e){
+    let name = document.getElementById('u-name')
+    let username = document.getElementById('u-username')
+    let email = document.getElementById('u-email')
+    let status = true
+    if(!validateInput(name,document.getElementById('nameHelpupdate'))){
+        status = false
+    }if(!validateInput(username,document.getElementById('usernameHelpupdate'))){
+        status = false
+    }if(!validateInput(email,document.getElementById('emailHelpupdate'))){
+        status = false
+    }
+    if(status){
+        let newData = {
+            name : name.value,
+            username : username.value,
+            email : email.value
+        }
+        data.forEach(item=>{
+            if(item.id == updateIndex){
+                item.name = newData.name,
+                item.username = newData.username,
+                item.email = newData.email
+            }
+        })
+        updateStatus(0,1,0)
+        flushInputs(name,document.getElementById('nameHelpupdate'))
+        flushInputs(username,document.getElementById('usernameHelpupdate'))
+        flushInputs(email,document.getElementById('emailHelpupdate'))
+        populate()
+        closeUpdateModal()
+        alertBox('success-alert', 'User Updated')
+    }
+})
+
+//Utility Functions
+const createClientRow = (clientID, className) =>{
+    let row = document.createElement('div')
+    row.setAttribute('id', clientID)
+    row.classList.add(className)
+    return row
 }
-const closeEditUserModal = () =>{
-    document.getElementById('updateUserModal').classList.add('d-none')
+const createClientCred = (type, className, text) =>{
+    let doc = document.createElement(type)
+    doc.classList.add(className)
+    if(text){
+        doc.innerHTML = text
+    }
+    return doc
 }
-const createI = (property) =>{
-    const i = document.createElement('i')
-    return i
+const validateInput = (element, helpEl) =>{
+    if(element.value == ''){
+        element.style.border = '1px solid red'
+        helpEl.innerHTML = 'Please Check this field'
+        helpEl.style.color = 'red'
+        return false
+    }else{
+        element.style.border = '1px solid green'
+        helpEl.innerHTML = "Everything Looks Good"
+        helpEl.style.color = 'green'
+        return true
+    }
 }
-const createP = (text, className) =>{
-    const p = document.createElement('p')
-    p.innerHTML = text
-    p.classList.add(className)
-    return p
+
+const flushInputs = (element, helpEL) =>{
+    element.style.border = '1px solid #dee'
+    element.value=''
+    helpEL.innerHTML = ''
 }
-const createHeader = (className, text) =>{
-    const el = document.createElement('h5')
-    el.classList.add(className)
-    el.innerHTML = text
-    return el
+
+const closeUpdateModal = () =>{
+    document.querySelector('#updateUserModal').classList.add('d-none')
 }
+
+const updateStatus = (Cr,Up,De) =>{
+    C += Cr
+    U += Up
+    D += De
+    document.getElementById('ti').innerHTML = C
+    document.getElementById('tc').innerHTML = data.length
+    document.getElementById('tu').innerHTML = U
+    document.getElementById('td').innerHTML = D
+}
+const alertBox = (status, text) =>{
+    const par = document.getElementById('alertBox')
+    par.classList.toggle('d-none')
+    par.innerHTML = ''
+    const box = document.createElement('p')
+    box.className = `${status} px-3 py-1`
+    box.innerHTML = text
+    par.appendChild(box)
+    setTimeout(()=>{
+        par.classList.toggle('d-none')
+    },2500)
+    // Clears out the alert custom box after 2.5 seconds
+}
+// Function Run
+closeUpdateModal()
 populate()
