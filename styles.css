@@ -1,5 +1,5 @@
 *{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'PT Serif', serif;
 }
 #landing{
     display: grid;
@@ -52,9 +52,10 @@
     transition: all 0.5s ease;
 }
 #headers{
-    color: #666;
+    color: #121222;
     border-bottom: 1px solid #eee;
     margin-bottom: 10px;
+    
 }
 .dataRow, #headers{
     display: grid;
@@ -120,14 +121,14 @@ i:hover{
     width: 100%;
     margin: auto;
     text-align: center;
+    font-weight: bold;
+    color: white;
 }
 .success-alert{
-    background-color: green;
-    color: white;
+    background-color: #23C552;
 }
 .failure-alert{
-    background-color: crimson;
-    color: white;
+    background-color: #F84F31;
 }
 @media(max-width:768px){
     .sideNav{

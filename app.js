@@ -144,7 +144,6 @@ document.getElementById('update-user-form').addEventListener('submit', function(
         alertBox('success-alert', 'User Updated')
     }
 })
-
 //Utility Functions
 const createClientRow = (clientID, className) =>{
     let row = document.createElement('div')
@@ -155,10 +154,8 @@ const createClientRow = (clientID, className) =>{
 const createClientCred = (type, className, text) =>{
     let doc = document.createElement(type)
     doc.classList.add(className)
-    if(text){
-        doc.innerHTML = text
-    }
-    return doc
+    if(text){ doc.innerHTML = text }
+        return doc
 }
 const validateInput = (element, helpEl) =>{
     if(element.value == ''){
@@ -173,17 +170,17 @@ const validateInput = (element, helpEl) =>{
         return true
     }
 }
-
 const flushInputs = (element, helpEL) =>{
     element.style.border = '1px solid #dee'
     element.value=''
     helpEL.innerHTML = ''
 }
-
 const closeUpdateModal = () =>{
     document.querySelector('#updateUserModal').classList.add('d-none')
 }
-
+const closeAddModal = () =>{
+    document.querySelector('#addUserModal').classList.add('d-none')
+}
 const updateStatus = (Cr,Up,De) =>{
     C += Cr
     U += Up
@@ -206,6 +203,8 @@ const alertBox = (status, text) =>{
     },2500)
     // Clears out the alert custom box after 2.5 seconds
 }
-// Function Run
+// Global Execution Context
 closeUpdateModal()
 populate()
+
+
