@@ -117,9 +117,11 @@ i:hover{
     color: white;
 }
 #alertBox{
+    position: absolute;
+    left: 50%;
+    transform: translate(-20px,-50%);
     scroll-behavior: smooth;
-    width: 100%;
-    margin: auto;
+    top: 20px; 
     text-align: center;
     font-weight: bold;
     color: white;
