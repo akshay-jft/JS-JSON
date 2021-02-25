@@ -26,7 +26,7 @@ const populate = async ()=>{
         alertBox('success-alert', 'Data Fetched')
     }
     DOC.innerHTML=''
-    document.getElementById('paginationBtn').innerHTML=''
+    document.getElementById('footer').innerHTML=''
     //Add Pagination Button Number
     let pagNumber = Math.floor(data.length/paginationLimit) 
     if(data.length%paginationLimit>0){
@@ -41,7 +41,7 @@ const populate = async ()=>{
             endIndex = startIndex + paginationLimit
             populate()
         })
-        document.getElementById('paginationBtn').appendChild(pagButton)
+        document.getElementById('footer').appendChild(pagButton)
     }
     document.getElementById('tc').innerHTML = data.length
     for(let pageInd = startIndex;pageInd<=endIndex-1;pageInd++){
