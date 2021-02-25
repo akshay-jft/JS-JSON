@@ -2,7 +2,7 @@ let status = false
 let data = []
 let updateIndex = -1
 let startIndex = 0
-const paginationLimit = 6
+let paginationLimit = 6
 let endIndex = startIndex + paginationLimit
 // CRUD Status
 let C = 0,
@@ -188,6 +188,7 @@ document.getElementById('update-user-form').addEventListener('submit', function(
         alertBox('success-alert', 'User Updated')
     }
 })
+
 //Utility Functions
 const createClientRow = (clientID, className) =>{
     let row = document.createElement('div')
@@ -243,6 +244,14 @@ const alertBox = (status, text) =>{
         par.classList.toggle('d-none')
     },2500)
     // Clears out the alert custom box after 2.5 seconds
+}
+//Set Pagination Limit Through UI
+
+const setPagination = (evt,num)=>{
+    paginationLimit = num
+    startIndex=0
+    endIndex=startIndex+paginationLimit
+    populate()
 }
 // Global Execution Context
 closeUpdateModal()

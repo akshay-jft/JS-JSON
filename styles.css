@@ -57,9 +57,13 @@
     margin-bottom: 10px;
     
 }
-.dataRow, #headers{
+.dataRow{
     display: grid;
     grid-template-columns: 20% 20% 40% 10% 10%;
+}
+#headers{
+    display: grid;
+    grid-template-columns: 20% 20% 40% 20%;
 }
 .dataRow{
     border-bottom: 1px solid #eee;
@@ -146,6 +150,21 @@ i:hover{
     color: white;
     transition: all 0.3s ease;
 }
+.test{
+    border: 1px solid red;
+}
+#paginationOptions{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.client-row p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding:5px;
+}
 @media(max-width:768px){
     .sideNav{
         display: none;
@@ -153,13 +172,16 @@ i:hover{
     #landing{
         grid-template-columns: 100%;
     }
-    .cEmail{
-        display: none;
-    }
     .client-row{
-        grid-template-columns: 40% 40% 10% 10%;
+        grid-template-columns: 30% 20% 40% 5% 5%;
+        font-size: 12px;
     }
     .dataRow, #headers{
-        grid-template-columns: 40% 40% 10% 10%;
+        grid-template-columns: 30% 20% 40% 5% 5%;
+    }
+    #headers h4{
+        font-size: 13px;
+        
     }
 }
+
