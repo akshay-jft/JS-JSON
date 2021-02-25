@@ -1,6 +1,9 @@
 let status = false
 let data = []
 let updateIndex = -1
+let startIndex = 0
+const paginationLimit = 6
+let endIndex = startIndex + paginationLimit
 // CRUD Status
 let C = 0,
     R = 0,
@@ -22,61 +25,90 @@ const populate = async ()=>{
         await load()
         alertBox('success-alert', 'Data Fetched')
     }
-    document.getElementById('tc').innerHTML = data.length
     DOC.innerHTML=''
-    data.forEach((client)=>{
+    document.getElementById('paginationBtn').innerHTML=''
+    //Add Pagination Button Number
+    let pagNumber = Math.floor(data.length/paginationLimit) 
+    if(data.length%paginationLimit>0){
+        pagNumber+=1
+    }
+    if(data.length==paginationLimit){
+        startIndex=0
+        endIndex = paginationLimit
+    }
+    // Adding Event Listener on Pagination Number
+    for(let ind=1; ind<=pagNumber;ind++){
+        let pagButton = document.createElement('button')
+        pagButton.innerHTML = ind
+        pagButton.addEventListener('click', function(event){
+            startIndex = String(event.target.innerHTML) * paginationLimit - paginationLimit
+            endIndex = startIndex + paginationLimit
+            console.log(`${startIndex} to ${endIndex}`)
+            populate()
+        })
+        document.getElementById('paginationBtn').appendChild(pagButton)
+    }
+    document.getElementById('tc').innerHTML = data.length
+    for(let pageInd = startIndex;pageInd<=endIndex-1;pageInd++){
         // Create a client row with id = client.id
-        let clientHead = createClientRow(client.id, 'client-row')
-        // Create p tags with client name, username, email
-        let name = createClientCred('p','cName',client.name)
-        let username = createClientCred('p','cUsername',client.username)
-        let email = createClientCred('p','cEmail',client.email)
+        let client = data[pageInd]
+        if(client){
+            let clientHead = createClientRow(client.id, 'client-row')
+            // Create p tags with client name, username, email
+            let name = createClientCred('p','cName',client.name)
+            let username = createClientCred('p','cUsername',client.username)
+            let email = createClientCred('p','cEmail',client.email)
 
-        let edit = createClientCred('i', 'editBtn')
-        edit.classList.add('far','fa-edit')
-        // Attach Modal to Edit Button
-        edit.addEventListener('click', function(e){
-            // Pre Fill Details
-            let targetElement = document.getElementById(e.target.parentElement.id)
-            let previous = {
-                name : targetElement.querySelector('.cName').innerHTML,
-                username : targetElement.querySelector('.cUsername').innerHTML,
-                email : targetElement.querySelector('.cEmail').innerHTML
+            let edit = createClientCred('i', 'editBtn')
+            edit.classList.add('far','fa-edit')
+            // Attach Modal to Edit Button
+            edit.addEventListener('click', function(e){
+                // Pre Fill Details
+                let targetElement = document.getElementById(e.target.parentElement.id)
+                let previous = {
+                    name : targetElement.querySelector('.cName').innerHTML,
+                    username : targetElement.querySelector('.cUsername').innerHTML,
+                    email : targetElement.querySelector('.cEmail').innerHTML
+                }
+                // Set Modal Values
+                document.getElementById('u-name').value = previous.name
+                document.getElementById('u-username').value = previous.username
+                document.getElementById('u-email').value = previous.email
+                document.querySelector('#updateUserModal').classList.toggle('d-none')
+                updateIndex = client.id
+            })
+            let del = createClientCred('i', 'delBtn')
+            del.classList.add('far','fa-minus-square')
+            // Add Event Listener on Del Button
+            del.addEventListener('click', function(e){
+                if(confirm('Are you sure you want to delete this client?')){
+                    updateIndex = e.target.parentElement.id
+                    data = data.filter(delItem=>{
+                        return delItem.id!=updateIndex
+                    })
+                    populate()
+                    updateStatus(0,0,1)
+                    alertBox('failure-alert', 'User Deleted')
+                }
+            })
+            
+            // Append 5 elements to clientHead
+            clientHead.appendChild(name)
+            clientHead.appendChild(username)
+            clientHead.appendChild(email)
+            clientHead.appendChild(edit)
+            clientHead.appendChild(del)
+            // Append ClientHead to body of html
+            DOC.appendChild(clientHead)
+            
             }
-            // Set Modal Values
-            document.getElementById('u-name').value = previous.name
-            document.getElementById('u-username').value = previous.username
-            document.getElementById('u-email').value = previous.email
-            document.querySelector('#updateUserModal').classList.toggle('d-none')
-            updateIndex = client.id
-        })
-        let del = createClientCred('i', 'delBtn')
-        del.classList.add('far','fa-minus-square')
-        // Add Event Listener on Del Button
-        del.addEventListener('click', function(e){
-            if(confirm('Are you sure you want to delete this client?')){
-                updateIndex = e.target.parentElement.id
-                data = data.filter(delItem=>{
-                    return delItem.id!=updateIndex
-                })
-                populate()
-                updateStatus(0,0,1)
-                alertBox('failure-alert', 'User Deleted')
-            }
-        })
         
-        // Append 5 elements to clientHead
-        clientHead.appendChild(name)
-        clientHead.appendChild(username)
-        clientHead.appendChild(email)
-        clientHead.appendChild(edit)
-        clientHead.appendChild(del)
-        // Append ClientHead to body of html
-        DOC.appendChild(clientHead)
-        
-    })
+    }
 }
 
+const paginateWebsite = () =>{
+    
+}
 
 // Add Event Listener on Add User Form
 document.querySelector('#add-user-form').addEventListener('submit', function(e){
@@ -178,9 +210,6 @@ const flushInputs = (element, helpEL) =>{
 const closeUpdateModal = () =>{
     document.querySelector('#updateUserModal').classList.add('d-none')
 }
-const closeAddModal = () =>{
-    document.querySelector('#addUserModal').classList.add('d-none')
-}
 const updateStatus = (Cr,Up,De) =>{
     C += Cr
     U += Up
@@ -205,6 +234,7 @@ const alertBox = (status, text) =>{
 }
 // Global Execution Context
 closeUpdateModal()
+paginateWebsite()
 populate()
 
 
