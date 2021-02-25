@@ -32,10 +32,6 @@ const populate = async ()=>{
     if(data.length%paginationLimit>0){
         pagNumber+=1
     }
-    if(data.length==paginationLimit){
-        startIndex=0
-        endIndex = paginationLimit
-    }
     // Adding Event Listener on Pagination Number
     for(let ind=1; ind<=pagNumber;ind++){
         let pagButton = document.createElement('button')
@@ -43,7 +39,6 @@ const populate = async ()=>{
         pagButton.addEventListener('click', function(event){
             startIndex = String(event.target.innerHTML) * paginationLimit - paginationLimit
             endIndex = startIndex + paginationLimit
-            console.log(`${startIndex} to ${endIndex}`)
             populate()
         })
         document.getElementById('paginationBtn').appendChild(pagButton)
@@ -89,6 +84,11 @@ const populate = async ()=>{
                     populate()
                     updateStatus(0,0,1)
                     alertBox('failure-alert', 'User Deleted')
+                    if(data.length%paginationLimit==0){
+                        startIndex=Math.floor(data.length/paginationLimit)-1
+                        endIndex = startIndex + paginationLimit-1
+                        populate()
+                    }
                 }
             })
             
