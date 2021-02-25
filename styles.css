@@ -136,10 +136,15 @@ i:hover{
     padding: 2px 10px;
     border: 1px solid white;
     color: black;
-    background-color: white;
     margin-top: 10px;
     margin-right: 5px;
     border-radius: 2px;
+}
+#footer button.active-page{
+    background-color: #555;
+    border: 1px solid #333;
+    color: white;
+    transition: all 0.3s ease;
 }
 @media(max-width:768px){
     .sideNav{

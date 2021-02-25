@@ -36,11 +36,15 @@ const populate = async ()=>{
     for(let ind=1; ind<=pagNumber;ind++){
         let pagButton = document.createElement('button')
         pagButton.innerHTML = ind
+        pagButton.className="pagination-custom-button"
         pagButton.addEventListener('click', function(event){
             startIndex = String(event.target.innerHTML) * paginationLimit - paginationLimit
             endIndex = startIndex + paginationLimit
+            
             populate()
+            updateActivePage(event.target.innerHTML)
         })
+        
         document.getElementById('footer').appendChild(pagButton)
     }
     document.getElementById('tc').innerHTML = data.length
@@ -106,8 +110,16 @@ const populate = async ()=>{
     }
 }
 
-const paginateWebsite = () =>{
-    
+const updateActivePage = (ev)=>{
+    const paginationButtons = document.querySelectorAll('.pagination-custom-button')
+    paginationButtons.forEach(btn=>{
+        console.log(`${ev} - ${btn.innerHTML}`)
+        if(btn.innerHTML === ev){
+            btn.classList.add('active-page')
+        }else{
+            btn.classList.remove('active-page')
+        }
+    })
 }
 
 // Add Event Listener on Add User Form
@@ -234,7 +246,6 @@ const alertBox = (status, text) =>{
 }
 // Global Execution Context
 closeUpdateModal()
-paginateWebsite()
 populate()
 
 
